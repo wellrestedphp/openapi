@@ -1,7 +1,7 @@
 {
-    "name": "wellrested/wellrested",
-    "description": "Simple PHP Library for RESTful APIs",
-    "keywords": ["rest", "restful", "api", "http", "psr7", "psr-7", "psr15", "psr-15", "psr17", "psr-17"],
+    "name": "wellrested/openapi",
+    "description": "OpenAPI documentation generation for WellRESTed APIs",
+    "keywords": ["rest", "restful", "api", "openpi", "swagger", "documentation"],
     "homepage": "https://www.wellrested.org",
     "license": "MIT",
     "type": "library",
@@ -13,11 +13,7 @@
     ],
     "require": {
         "php": ">=8.1",
-        "psr/container": ">=1.0",
-        "psr/http-factory": "~1.0",
-        "psr/http-message": "~1.0",
-        "psr/http-server-handler":  "~1.0",
-        "psr/http-server-middleware": "~1.0"
+        "wellrested/wellrested": "^6-dev"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3",
@@ -27,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "WellRESTed\\": "src/"
+            "WellRESTed\\OpenAPI\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "WellRESTed\\": "tests",
+            "WellRESTed\\OpenAPI\\": "tests",
             "WellRESTed\\Test\\": "tests"
         }
     }
