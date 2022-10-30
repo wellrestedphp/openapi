@@ -1,0 +1,39 @@
+{
+    "name": "wellrested/wellrested",
+    "description": "Simple PHP Library for RESTful APIs",
+    "keywords": ["rest", "restful", "api", "http", "psr7", "psr-7", "psr15", "psr-15", "psr17", "psr-17"],
+    "homepage": "https://www.wellrested.org",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "PJ Dietz",
+            "email": "pjdietz@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "psr/container": ">=1.0",
+        "psr/http-factory": "~1.0",
+        "psr/http-message": "~1.0",
+        "psr/http-server-handler":  "~1.0",
+        "psr/http-server-middleware": "~1.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpspec/prophecy-phpunit": "^2",
+        "phpunit/phpunit": "^9",
+        "vimeo/psalm": "^4"
+    },
+    "autoload": {
+        "psr-4": {
+            "WellRESTed\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WellRESTed\\": "tests",
+            "WellRESTed\\Test\\": "tests"
+        }
+    }
+}

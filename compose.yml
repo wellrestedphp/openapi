@@ -1,0 +1,27 @@
+services:
+
+  nginx:
+    image: nginx:1.21
+    depends_on:
+      - swagger
+      - php
+    ports:
+      - ${PORT:-8080}:80
+    volumes:
+      - .:/app
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - .:/app
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    environment:
+      - BASE_URL=/swagger
+      - SWAGGER_JSON=/app/static.json
+    volumes:
+      - .:/app
