@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-use JsonSerializable;
-
-class Operation implements JsonSerializable
+class Operation
 {
     /** string[] */
     public array $tags = [];
@@ -23,11 +21,4 @@ class Operation implements JsonSerializable
     public array $responses = [];
 
     public bool $deprecated = false;
-
-    public function jsonSerialize(): mixed
-    {
-        $json = [
-        ];
-        return (object) $json;
-    }
 }

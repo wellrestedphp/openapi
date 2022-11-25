@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-use JsonSerializable;
-
-class Document implements JsonSerializable
+class Document
 {
     public string $openapi = '3.0.3';
 
@@ -19,16 +17,4 @@ class Document implements JsonSerializable
     {
         $this->info = new Info();
     }
-
-    public function jsonSerialize(): object
-    {
-        $json = [
-            'openapi' => $this->openapi,
-            'info' => $this->info,
-            'paths' => $this->paths
-        ];
-        return (object) $json;
-    }
 }
-
-
