@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WellRESTed\OpenAPI;
 
 use WellRESTed\OpenAPI\Components\Document;
-use WellRESTed\OpenAPI\Components\Path;
 use WellRESTed\Routing\Router;
 use WellRESTed\Server;
 
@@ -15,6 +14,8 @@ class DocumentGenerator
     {
         $doc = new Document();
 
+        $pathGen = new PathGenerator();
+
         $middlewareQueue = $server->getMiddleware();
 
         foreach ($middlewareQueue as $middleware) {
@@ -23,9 +24,7 @@ class DocumentGenerator
 
                 /** var Route $route */
                 foreach ($routes as $target => $route) {
-
-                    $doc->paths[$target] = new Path();
-
+                    $doc->paths[$target] = $pathGen->generate($route);
                 }
             }
         }
