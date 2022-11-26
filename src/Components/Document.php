@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-class Document
+class Document extends Component
 {
     public string $openapi = '3.0.3';
 

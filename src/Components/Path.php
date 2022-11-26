@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-class Path
+class Path extends Component
 {
     public ?string $summary = null;
 

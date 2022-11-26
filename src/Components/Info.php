@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-class Info
+class Info extends Component
 {
     public string $title = '';
 

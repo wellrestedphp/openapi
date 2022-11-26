@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-class Operation
+class Operation extends Component
 {
     /** string[] */
     public array $tags = [];
