@@ -22,7 +22,7 @@ services:
     image: swaggerapi/swagger-ui
     environment:
       - BASE_URL=/swagger
-      - SWAGGER_JSON_URL=/sandbox.php
+      - SWAGGER_JSON_URL=/openapi.json
       # - SWAGGER_JSON=/app/static.json
     volumes:
       - .:/app
