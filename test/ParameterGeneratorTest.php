@@ -12,19 +12,26 @@ use WellRESTed\Test\TestCase;
 
 class ParameterGeneratorTest extends TestCase
 {
+    private Server $server;
+    private ParameterGenerator $generator;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->server = new Server();
+        $resolver = new Reflectionresolver($this->server);
+        $this->generator = new ParameterGenerator($resolver);
+    }
+
     public function testIncludesParametersFromAttributes(): void
     {
         // Arrange
         $handler = new #[Parameter('color', In::QUERY)] class {};
-
-        $server = new Server();
-        $router = $server->createRouter();
-        $router->register('GET', '/cats/', $handler);
-        $route = $router->getRoutes()['/cats/'];
+        $route = $this->createRoute('/cats/', $handler);
 
         // Act
-        $paramGen= new ParameterGenerator();
-        $params = $paramGen->generate('GET', $route);
+        $params = $this->generate('GET', $route);
 
         // Assert
         $this->assertCount(1, $params);
@@ -50,16 +57,14 @@ class ParameterGeneratorTest extends TestCase
 
     private function generate(string $method, Route $route): array
     {
-        $paramGen = new ParameterGenerator();
-        return $paramGen->generate($method, $route);
+        return $this->generator->generate($method, $route);
     }
 
     private function createRoute(string $path, mixed $handler = null): Route
     {
         $handler ??= new class () {};
 
-        $server = new Server();
-        $router = $server->createRouter();
+        $router = $this->server->createRouter();
         $router->register('GET', $path, $handler);
         return $router->getRoutes()[$path];
     }

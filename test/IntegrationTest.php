@@ -70,4 +70,14 @@ class IntegrationTest extends TestCase
         $this->assertArrayHasKey('401', $responses);
         $this->assertArrayHasKey('403', $responses);
     }
+
+    public function testReadsAttributesFromServiceName(): void
+    {
+        $params = $this->doc->paths['/dogs/']->get->parameters;
+        $map = [];
+        foreach ($params as $param) {
+            $map[$param->name] = $param;
+        }
+        $this->assertArrayHasKey('breed', $map);
+    }
 }

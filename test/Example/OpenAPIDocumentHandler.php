@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WellRESTed\Message\Response;
 use WellRESTed\Message\Stream;
-use WellRESTed\OpenAPI\Attributes\StatusCode;
+use WellRESTed\OpenAPI\Components\StatusCode;
 use WellRESTed\OpenAPI\DocumentGenerator;
 use WellRESTed\Server;
 

@@ -14,7 +14,9 @@ class DocumentGenerator
     {
         $doc = new Document();
 
-        $pathGen = new PathGenerator();
+        $reflectionResolver = new ReflectionResolver($server);
+
+        $pathGen = new PathGenerator($reflectionResolver);
 
         $middlewareQueue = $server->getMiddleware();
 

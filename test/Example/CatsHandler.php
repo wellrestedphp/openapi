@@ -9,8 +9,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WellRESTed\Message\Response;
 use WellRESTed\Message\Stream;
-use WellRESTed\OpenAPI\Components\StatusCode;
 use WellRESTed\OpenAPI\Components\Parameter;
+use WellRESTed\OpenAPI\Components\StatusCode;
 
 #[StatusCode(200, description: 'List of cats')]
 #[StatusCode(403, description: 'User does not have access')]

@@ -5,11 +5,21 @@ declare(strict_types=1);
 namespace WellRESTed\OpenAPI;
 
 use WellRESTed\Message\Response;
-use WellRESTed\OpenAPI\Example;
+use WellRESTed\OpenAPI\Doubles\ContainerDouble;
+use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 
 class ReflectionResolverTest extends TestCase
 {
+    private Server $server;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->server = new Server();
+        $this->reflectionResolver = new ReflectionResolver($this->server);
+    }
+
     public function testResolvesReflectorFromClassName(): void
     {
         // Arrange
@@ -17,6 +27,23 @@ class ReflectionResolverTest extends TestCase
 
         // Act
         $reflectors = $this->resolve($handler);
+
+        // Assert
+        $this->assertCount(1, $reflectors);
+        $this->assertEquals($reflectors[0]->getName(), Example\CatsHandler::class);
+    }
+
+    public function testResolvesReflectorFromServiceName(): void
+    {
+        // Arrange
+        $container = new ContainerDouble();
+        $serviceName = 'myHandler';
+        $handler = new Example\CatsHandler();
+        $container->services[$serviceName] = $handler;
+        $this->server->setContainer($container);
+
+        // Act
+        $reflectors = $this->resolve($serviceName);
 
         // Assert
         $this->assertCount(1, $reflectors);
@@ -39,7 +66,7 @@ class ReflectionResolverTest extends TestCase
     public function testResolvesReflectorFromFactoryFunction(): void
     {
         // Arrange
-        $handler = fn(): Example\CatsHandler => new Example\CatsHandler();
+        $handler = fn (): Example\CatsHandler => new Example\CatsHandler();
 
         // Act
         $reflectors = $this->resolve($handler);
@@ -80,7 +107,6 @@ class ReflectionResolverTest extends TestCase
     /** @return ReflectionClass[] */
     private function resolve(mixed $handler): array
     {
-        $resolver = new ReflectionResolver();
-        return $resolver->getReflections($handler);
+        return $this->reflectionResolver->getReflections($handler);
     }
 }

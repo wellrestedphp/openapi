@@ -11,9 +11,9 @@ class ResponseGenerator
 {
     private ReflectionResolver $reflectionResolver;
 
-    public function __construct(?ReflectionResolver $reflectionResolver = null)
+    public function __construct(ReflectionResolver $reflectionResolver)
     {
-        $this->reflectionResolver = $reflectionResolver ?? new ReflectionResolver();
+        $this->reflectionResolver = $reflectionResolver;
     }
 
     public function generate(mixed $handler): array

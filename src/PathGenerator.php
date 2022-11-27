@@ -10,6 +10,13 @@ use WellRESTed\Routing\Route\Route;
 
 class PathGenerator
 {
+    private ReflectionResolver $reflectionResolver;
+
+    public function __construct(ReflectionResolver $reflectionResolver)
+    {
+        $this->reflectionResolver = $reflectionResolver;
+    }
+
     public function generate(Route $route): Path
     {
         $path = new Path();
@@ -29,11 +36,11 @@ class PathGenerator
 
         $operation = new Operation();
 
-        $paramGen = new ParameterGenerator();
+        $paramGen = new ParameterGenerator($this->reflectionResolver);
         $params = $paramGen->generate($method, $route);
         $operation->parameters = $params;
 
-        $responseGen = new ResponseGenerator();
+        $responseGen = new ResponseGenerator($this->reflectionResolver);
         $operation->responses = $responseGen->generate($handler);
 
         return $operation;

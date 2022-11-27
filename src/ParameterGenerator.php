@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WellRESTed\OpenAPI;
 
 use OutOfBoundsException;
-use ReflectionClass;
 use WellRESTed\OpenAPI\Components\In;
 use WellRESTed\OpenAPI\Components\Parameter;
 use WellRESTed\Routing\Route\Route;
@@ -14,9 +13,9 @@ class ParameterGenerator
 {
     private ReflectionResolver $reflectionResolver;
 
-    public function __construct(?ReflectionResolver $reflectionResolver = null)
+    public function __construct(ReflectionResolver $reflectionResolver)
     {
-        $this->reflectionResolver = $reflectionResolver ?? new ReflectionResolver();
+        $this->reflectionResolver = $reflectionResolver;
     }
 
     /** @return Parameter[] */

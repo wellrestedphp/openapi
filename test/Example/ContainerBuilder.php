@@ -21,7 +21,7 @@ class ContainerBuilder
 
                 $router->register('GET,POST', '/cats/', CatsHandler::class);
                 $router->register('GET', '/cats/{id}', GetCatHandler::class);
-                $router->register('GET,POST', '/dogs/', DogsHandler::class);
+                $router->register('GET,POST', '/dogs/', 'dog.list.handler');
 
                 $router->register('GET', '/protected/', [TokenMiddleware::class, ProtectedHandler::class]);
 
@@ -32,7 +32,7 @@ class ContainerBuilder
                 return $server;
             },
             CatsHandler::class => DI\autowire(),
-            DogsHandler::class => DI\autowire(),
+            'dog.list.handler' => DI\autowire(DogsHandler::class),
             TokenMiddleware::class => DI\autowire(),
             ProtectedHandler::class => DI\autowire(),
             OpenAPIDocumentHandler::class => DI\autowire()
