@@ -1,0 +1,4 @@
+{
+  "src/*.php": {"alternate": "test/{}Test.php"},
+  "test/*Test.php": {"alternate": "src/{}.php"}
+}

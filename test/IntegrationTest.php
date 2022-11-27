@@ -62,4 +62,12 @@ class IntegrationTest extends TestCase
         }
         $this->assertArrayHasKey('id', $map);
     }
+
+    public function testReadsAttributesFromMiddlewareQueue(): void
+    {
+        $responses = $this->doc->paths['/protected/']->get->responses;
+        $this->assertArrayHasKey('200', $responses);
+        $this->assertArrayHasKey('401', $responses);
+        $this->assertArrayHasKey('403', $responses);
+    }
 }

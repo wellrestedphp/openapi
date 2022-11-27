@@ -33,6 +33,9 @@ class PathGenerator
         $params = $paramGen->generate($method, $route);
         $operation->parameters = $params;
 
+        $responseGen = new ResponseGenerator();
+        $operation->responses = $responseGen->generate($handler);
+
         return $operation;
     }
 }
