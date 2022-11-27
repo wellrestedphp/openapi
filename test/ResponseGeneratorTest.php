@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI;
 
-use WellRESTed\OpenAPI\Attributes\StatusCode;
+use WellRESTed\OpenAPI\Components\StatusCode;
 use WellRESTed\Test\TestCase;
 
 class ResponseGeneratorTest extends TestCase

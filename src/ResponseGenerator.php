@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace WellRESTed\OpenAPI;
 
 use ReflectionClass;
-use WellRESTed\OpenAPI\Attributes\StatusCode;
 use WellRESTed\OpenAPI\Components\Response;
+use WellRESTed\OpenAPI\Components\StatusCode;
 
 class ResponseGenerator
 {
