@@ -6,7 +6,6 @@ namespace WellRESTed\OpenAPI;
 
 use OutOfBoundsException;
 use ReflectionClass;
-use WellRESTed\OpenAPI\Attributes\Param;
 use WellRESTed\OpenAPI\Components\In;
 use WellRESTed\OpenAPI\Components\Parameter;
 use WellRESTed\Routing\Route\Route;
@@ -48,11 +47,9 @@ class ParameterGenerator
 
         $params = [];
 
-        $atts = $reflection->getAttributes(Param::class);
+        $atts = $reflection->getAttributes(Parameter::class);
         foreach ($atts as $att) {
-            $attInstance = $att->newInstance();
-            $param = new Parameter($attInstance->name, $attInstance->in);
-            $params[] = $param;
+            $params[] = $att->newInstance();
         }
 
         return $params;

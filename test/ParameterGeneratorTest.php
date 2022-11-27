@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI;
 
-use WellRESTed\OpenAPI\Attributes\Param;
 use WellRESTed\OpenAPI\Components\In;
+use WellRESTed\OpenAPI\Components\Parameter;
 use WellRESTed\Routing\Route\Route;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
@@ -15,7 +15,7 @@ class ParameterGeneratorTest extends TestCase
     public function testIncludesParametersFromAttributes(): void
     {
         // Arrange
-        $handler = new #[Param('color', In::QUERY)] class {};
+        $handler = new #[Parameter('color', In::QUERY)] class {};
 
         $server = new Server();
         $router = $server->createRouter();
