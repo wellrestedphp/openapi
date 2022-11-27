@@ -21,5 +21,6 @@ class Operation extends Component
     /** @var Parameter[] */
     public array $parameters = [];
 
+    #[JsonOmitDefault]
     public bool $deprecated = false;
 }

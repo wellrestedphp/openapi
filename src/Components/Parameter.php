@@ -13,8 +13,10 @@ class Parameter extends Component
 
     public readonly In $in;
 
+    #[JsonOmitDefault]
     public string $description = '';
 
+    #[JsonOmitDefault]
     public bool $deprecated = false;
 
     public bool $required;

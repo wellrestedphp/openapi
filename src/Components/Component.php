@@ -29,6 +29,13 @@ abstract class Component implements JsonSerializable
                 continue;
             }
 
+            if ($property->isDefault()) {
+                $reflectionProp = new ReflectionProperty($this, $key);
+                if ($reflectionProp->getAttributes(JsonOmitDefault::class)) {
+                    continue;
+                }
+            }
+
             $result[$key] = $value;
         }
         return $result;

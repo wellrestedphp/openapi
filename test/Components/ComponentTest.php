@@ -47,4 +47,19 @@ class ComponentTest extends TestCase
         $this->assertArrayNotHasKey('description', $decoded);
         $this->assertArrayNotHasKey('summary', $decoded);
     }
+
+    public function testWhenPropertyHasDefaultValueAndOmitDefaultDoesNotSerialize(): void
+    {
+        // Arrange
+        $myComponent = new class () extends Component {
+            #[JsonOmitDefault]
+            public bool $deprecated = false;
+        };
+
+        // Act
+        $decoded = json_decode(json_encode($myComponent), true);
+
+        // Assert
+        $this->assertArrayNotHasKey('deprecated', $decoded);
+    }
 }
