@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WellRESTed\OpenAPI;
 
 use WellRESTed\OpenAPI\Components\Document;
-use WellRESTed\OpenAPI\DocumentGenerator;
 use WellRESTed\OpenAPI\Example\ContainerBuilder;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
@@ -52,5 +51,15 @@ class IntegrationTest extends TestCase
             $map[$param->name] = $param;
         }
         $this->assertArrayHasKey('color', $map);
+    }
+
+    public function testShouldProvideParameterFromPathTemplate(): void
+    {
+        $params = $this->doc->paths['/cats/{id}']->get->parameters;
+        $map = [];
+        foreach ($params as $param) {
+            $map[$param->name] = $param;
+        }
+        $this->assertArrayHasKey('id', $map);
     }
 }

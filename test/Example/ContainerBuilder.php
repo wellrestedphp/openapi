@@ -15,7 +15,6 @@ class ContainerBuilder
         $builder = new DI\ContainerBuilder();
         $builder->addDefinitions([
             Server::class => function (DI\Container $c): Server {
-
                 $server = new Server();
                 $server->setContainer($c);
                 $router = $server->createRouter();
