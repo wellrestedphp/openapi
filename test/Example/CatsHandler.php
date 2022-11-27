@@ -9,10 +9,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use WellRESTed\Message\Response;
 use WellRESTed\Message\Stream;
+use WellRESTed\OpenAPI\Attributes\Param;
 use WellRESTed\OpenAPI\Attributes\StatusCode;
 
 #[StatusCode(200, description: 'List of cats')]
 #[StatusCode(403, description: 'User does not have access')]
+#[Param('color')]
 class CatsHandler implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface

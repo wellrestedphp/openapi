@@ -16,7 +16,7 @@ class Param
 
     public function __construct(
         string $name,
-        In $in
+        In $in = In::QUERY
     ) {
         $this->name = $name;
         $this->in = $in;

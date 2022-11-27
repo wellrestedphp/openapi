@@ -12,20 +12,27 @@ class PathGenerator
 {
     public function generate(Route $route): Path
     {
-        $methods = $route->getMethods();
-
         $path = new Path();
-        $path->get = $this->generateOperation($methods['GET'] ?? null);
-        $path->post = $this->generateOperation($methods['POST'] ?? null);
+        $path->get = $this->generateOperation('GET', $route);
+        $path->post = $this->generateOperation('POST', $route);
 
         return $path;
     }
 
-    private function generateOperation(mixed $handler): ?Operation
+    private function generateOperation(string $method, Route $route): ?Operation
     {
+        $handler = $route->getMethods()[$method] ?? null;
+
         if (!$handler) {
             return null;
         }
-        return new Operation();
+
+        $operation = new Operation();
+
+        $paramGen = new ParameterGenerator();
+        $params = $paramGen->generate($method, $route);
+        $operation->parameters = $params;
+
+        return $operation;
     }
 }

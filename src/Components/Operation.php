@@ -15,10 +15,11 @@ class Operation extends Component
 
     public ?string $operationId = null;
 
-    public ?Operation $get = null;
-
     /** @var Response[] */
     public array $responses = [];
+
+    /** @var Parameter[] */
+    public array $parameters = [];
 
     public bool $deprecated = false;
 }

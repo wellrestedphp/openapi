@@ -36,4 +36,21 @@ class IntegrationTest extends TestCase
         $this->assertArrayHasKey('/cats/', $paths);
         $this->assertArrayHasKey('/dogs/', $paths);
     }
+
+    public function testProvidesMethodsSupportedByEndpoints(): void
+    {
+        $operations = $this->doc->paths['/cats/'];
+        $this->assertNotNull($operations->get);
+        $this->assertNotNull($operations->post);
+    }
+
+    public function testProvidesParametersFromAttributes(): void
+    {
+        $params = $this->doc->paths['/cats/']->get->parameters;
+        $map = [];
+        foreach ($params as $param) {
+            $map[$param->name] = $param;
+        }
+        $this->assertArrayHasKey('color', $map);
+    }
 }
