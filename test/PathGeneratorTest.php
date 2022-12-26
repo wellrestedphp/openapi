@@ -22,18 +22,35 @@ class PathGeneratorTest extends TestCase
         $this->generator = new PathGenerator($resolver);
     }
 
-    public function testIncludesOperationsForSupportedMethods(): void
-    {
+    /** @dataProvider methodProvider */
+    public function testIncludesOperationsForSupportedMethods(
+        string $registerMethods,
+        array $expected
+    ): void {
         // Arrange
         $router = $this->server->createRouter();
-        $router->register('GET,POST', '/cats/', new Response(200));
-        $route = $router->getRoutes()['/cats/'];
+        $router->register($registerMethods, '/path/', new Response(200));
+        $route = $router->getRoutes()['/path/'];
 
         // Act
         $path = $this->generator->generate($route);
 
         // Assert
-        $this->assertNotNull($path->get);
-        $this->assertNotNull($path->post);
+        foreach ($expected as $method) {
+            $this->assertNotNull($path->{$method}, "Should have had operation for $method");
+        }
+        $allMethods = ['get', 'post', 'put', 'delete', 'options', 'head', 'patch', 'trace'];
+        $expectedNull = array_diff($allMethods, $expected);
+        foreach ($expectedNull as $method) {
+            $this->assertNull($path->{$method}, "Should not have had operstion for $method");
+        }
+    }
+
+    public function methodProvider(): array
+    {
+        return [
+            ['GET,POST', ['get', 'post']],
+            ['GET,PUT,DELETE', ['get', 'put', 'delete']]
+        ];
     }
 }

@@ -10,6 +10,8 @@ use WellRESTed\Routing\Route\Route;
 
 class PathGenerator
 {
+    /** Methods described by OpenAPI */
+    private const METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD', 'PATCH', 'TRACE'];
     private ReflectionResolver $reflectionResolver;
 
     public function __construct(ReflectionResolver $reflectionResolver)
@@ -20,8 +22,11 @@ class PathGenerator
     public function generate(Route $route): Path
     {
         $path = new Path();
-        $path->get = $this->generateOperation('GET', $route);
-        $path->post = $this->generateOperation('POST', $route);
+
+        foreach (self::METHODS as $method) {
+            $operation = strtolower($method);
+            $path->{$operation} = $this->generateOperation($method, $route);
+        }
 
         return $path;
     }
