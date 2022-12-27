@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-class Operation extends Component
+use WellRESTed\OpenAPI\Encoding\OmitDefault;
+
+class Operation
 {
     /** string[] */
     public array $tags = [];
@@ -21,6 +23,6 @@ class Operation extends Component
     /** @var Parameter[] */
     public array $parameters = [];
 
-    #[JsonOmitDefault]
+    #[OmitDefault]
     public bool $deprecated = false;
 }

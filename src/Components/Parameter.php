@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace WellRESTed\OpenAPI\Components;
 
 use Attribute;
+use WellRESTed\OpenAPI\Encoding\OmitDefault;
 
 #[Attribute(Attribute::TARGET_CLASS|Attribute::IS_REPEATABLE)]
-class Parameter extends Component
+class Parameter
 {
     public readonly string $name;
 
     public readonly In $in;
 
-    #[JsonOmitDefault]
+    #[OmitDefault]
     public string $description = '';
 
-    #[JsonOmitDefault]
+    #[OmitDefault]
     public bool $deprecated = false;
 
     public bool $required;

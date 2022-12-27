@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-class Response extends Component
+class Response
 {
     public readonly string $description;
 
