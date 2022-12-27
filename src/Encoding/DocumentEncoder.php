@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\OpenAPI\Components\Document;
 use WellRESTed\Routing\Router;
 use WellRESTed\Server;
 
-class DocumentGenerator
+class DocumentEncoder
 {
-    public function generate(Server $server): Document
+    public function encode(Server $server): Document
     {
         $doc = new Document();
 
         $reflectionResolver = new ReflectionResolver($server);
 
-        $pathGen = new PathGenerator($reflectionResolver);
+        $pathGen = new PathEncoder($reflectionResolver);
 
         $middlewareQueue = $server->getMiddleware();
 
@@ -26,7 +26,7 @@ class DocumentGenerator
 
                 /** var Route $route */
                 foreach ($routes as $target => $route) {
-                    $doc->paths[$target] = $pathGen->generate($route);
+                    $doc->paths[$target] = $pathGen->encode($route);
                 }
             }
         }

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\Message\Response;
 use WellRESTed\OpenAPI\Doubles\ContainerDouble;
+use WellRESTed\OpenAPI\Example;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 

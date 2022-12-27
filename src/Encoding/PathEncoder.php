@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\OpenAPI\Components\Operation;
 use WellRESTed\OpenAPI\Components\Path;
 use WellRESTed\Routing\Route\Route;
 
-class PathGenerator
+class PathEncoder
 {
     /** Methods described by OpenAPI */
     private const METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD', 'PATCH', 'TRACE'];
@@ -19,7 +19,7 @@ class PathGenerator
         $this->reflectionResolver = $reflectionResolver;
     }
 
-    public function generate(Route $route): Path
+    public function encode(Route $route): Path
     {
         $path = new Path();
 
@@ -41,12 +41,12 @@ class PathGenerator
 
         $operation = new Operation();
 
-        $paramGen = new ParameterGenerator($this->reflectionResolver);
-        $params = $paramGen->generate($method, $route);
+        $paramGen = new ParameterEncoder($this->reflectionResolver);
+        $params = $paramGen->encode($method, $route);
         $operation->parameters = $params;
 
-        $responseGen = new ResponseGenerator($this->reflectionResolver);
-        $operation->responses = $responseGen->generate($handler);
+        $responseGen = new ResponseEncoder($this->reflectionResolver);
+        $operation->responses = $responseGen->encode($handler);
 
         return $operation;
     }

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\Message\Response;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 
-class DocumentGeneratorTest extends TestCase
+class DocumentEncoderTest extends TestCase
 {
-    public function testGeneratesPathForEachEndpoint(): void
+    public function testIncludesPathForEachEndpoint(): void
     {
         // Arrange
         $server = new Server();
@@ -20,8 +20,8 @@ class DocumentGeneratorTest extends TestCase
         $server->add($router);
 
         // Act
-        $docGen = new DocumentGenerator();
-        $doc = $docGen->generate($server);
+        $encoder = new DocumentEncoder();
+        $doc = $encoder->encode($server);
 
         // Assert
         $this->assertArrayHasKey('/cats/', $doc->paths);

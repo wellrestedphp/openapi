@@ -6,6 +6,7 @@ namespace WellRESTed\OpenAPI\Example;
 
 use DI;
 use Psr\Container\ContainerInterface;
+use WellRESTed\OpenAPI\Handlers;
 use WellRESTed\Server;
 
 class ContainerBuilder
@@ -25,8 +26,8 @@ class ContainerBuilder
 
                 $router->register('GET', '/protected/', [TokenMiddleware::class, ProtectedHandler::class]);
 
-                $router->register('GET', '/openapi.json', OpenAPIJsonHandler::class);
-                $router->register('GET', '/openapi.yaml', OpenAPIYamlHandler::class);
+                $router->register('GET', '/openapi.json', Handlers\OpenAPIJsonHandler::class);
+                $router->register('GET', '/openapi.yaml', Handlers\OpenAPIYamlHandler::class);
 
                 $server->add($router);
 

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use OutOfBoundsException;
 use WellRESTed\OpenAPI\Components\In;
 use WellRESTed\OpenAPI\Components\Parameter;
 use WellRESTed\Routing\Route\Route;
 
-class ParameterGenerator
+class ParameterEncoder
 {
     private ReflectionResolver $reflectionResolver;
 
@@ -19,7 +19,7 @@ class ParameterGenerator
     }
 
     /** @return Parameter[] */
-    public function generate(string $method, Route $route): array
+    public function encode(string $method, Route $route): array
     {
         return array_merge(
             $this->getParametersFromTarget($route),

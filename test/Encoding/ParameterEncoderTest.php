@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\OpenAPI\Components\In;
 use WellRESTed\OpenAPI\Components\Parameter;
@@ -10,10 +10,10 @@ use WellRESTed\Routing\Route\Route;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 
-class ParameterGeneratorTest extends TestCase
+class ParameterEncoderTest extends TestCase
 {
     private Server $server;
-    private ParameterGenerator $generator;
+    private ParameterEncoder $encoder;
 
     public function setUp(): void
     {
@@ -21,7 +21,7 @@ class ParameterGeneratorTest extends TestCase
 
         $this->server = new Server();
         $resolver = new Reflectionresolver($this->server);
-        $this->generator = new ParameterGenerator($resolver);
+        $this->encoder = new ParameterEncoder($resolver);
     }
 
     public function testIncludesParametersFromAttributes(): void
@@ -40,7 +40,7 @@ class ParameterGeneratorTest extends TestCase
         $this->assertEquals(In::QUERY, $param->in);
     }
 
-    public function testShouldProvideParameterFromPathTemplate(): void
+    public function testIncludesParametersFromPathTemplate(): void
     {
         // Arrange
         $route = $this->createRoute('/path/{foo}/{bar}');
@@ -57,7 +57,7 @@ class ParameterGeneratorTest extends TestCase
 
     private function generate(string $method, Route $route): array
     {
-        return $this->generator->generate($method, $route);
+        return $this->encoder->encode($method, $route);
     }
 
     private function createRoute(string $path, mixed $handler = null): Route

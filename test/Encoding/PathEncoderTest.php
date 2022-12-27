@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\Message\Response;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 
-class PathGeneratorTest extends TestCase
+class PathEncoderTest extends TestCase
 {
     private Server $server;
-    private PathGenerator $generator;
+    private PathEncoder $encoder;
 
     public function setUp(): void
     {
@@ -19,7 +19,7 @@ class PathGeneratorTest extends TestCase
 
         $this->server = new Server();
         $resolver = new Reflectionresolver($this->server);
-        $this->generator = new PathGenerator($resolver);
+        $this->encoder = new PathEncoder($resolver);
     }
 
     /** @dataProvider methodProvider */
@@ -33,7 +33,7 @@ class PathGeneratorTest extends TestCase
         $route = $router->getRoutes()['/path/'];
 
         // Act
-        $path = $this->generator->generate($route);
+        $path = $this->encoder->encode($route);
 
         // Assert
         foreach ($expected as $method) {

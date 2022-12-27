@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\OpenAPI\Components\Response;
 use WellRESTed\OpenAPI\Components\StatusCode;
 
-class ResponseGenerator
+class ResponseEncoder
 {
     private ReflectionResolver $reflectionResolver;
 
@@ -16,7 +16,7 @@ class ResponseGenerator
         $this->reflectionResolver = $reflectionResolver;
     }
 
-    public function generate(mixed $handler): array
+    public function encode(mixed $handler): array
     {
         $responses = [];
         $reflections = $this->reflectionResolver->getReflections($handler);

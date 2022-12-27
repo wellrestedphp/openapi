@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use Closure;
 use Psr\Http\Message\ResponseInterface;

@@ -22,8 +22,8 @@ class IntegrationTest extends TestCase
 
         $server = $container->get(Server::class);
 
-        $docGen = new DocumentGenerator();
-        $this->doc = $docGen->generate($server);
+        $encoder = new OpenAPIEncoder();
+        $this->doc = $encoder->encodeDocument($server);
     }
 
     // -------------------------------------------------------------------------
@@ -53,7 +53,7 @@ class IntegrationTest extends TestCase
         $this->assertArrayHasKey('color', $map);
     }
 
-    public function testShouldProvideParameterFromPathTemplate(): void
+    public function testProvidesParameterFromPathTemplate(): void
     {
         $params = $this->doc->paths['/cats/{id}']->get->parameters;
         $map = [];

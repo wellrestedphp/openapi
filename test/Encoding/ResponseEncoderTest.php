@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI;
+namespace WellRESTed\OpenAPI\Encoding;
 
 use WellRESTed\OpenAPI\Components\StatusCode;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 
-class ResponseGeneratorTest extends TestCase
+class ResponseEncoderTest extends TestCase
 {
     private Server $server;
-    private ResponseGenerator $generator;
+    private ResponseEncoder $encoder;
 
     public function setUp(): void
     {
@@ -19,7 +19,7 @@ class ResponseGeneratorTest extends TestCase
 
         $this->server = new Server();
         $resolver = new Reflectionresolver($this->server);
-        $this->generator = new ResponseGenerator($resolver);
+        $this->encoder = new ResponseEncoder($resolver);
     }
 
     public function testProvidesResponsesDescribedByStatusCodeAttributes(): void
@@ -28,7 +28,7 @@ class ResponseGeneratorTest extends TestCase
         $handler = new #[StatusCode(200)] #[StatusCode(404)] class {};
 
         // Act
-        $responses = $this->generator->generate($handler);
+        $responses = $this->encoder->encode($handler);
 
         // Assert
         $this->assertArrayHasKey('200', $responses);
