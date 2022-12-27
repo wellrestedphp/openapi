@@ -22,7 +22,6 @@ services:
     image: swaggerapi/swagger-ui
     environment:
       - BASE_URL=/swagger
-      - SWAGGER_JSON_URL=/openapi.json
-      # - SWAGGER_JSON=/app/static.json
+      - SWAGGER_JSON_URL=/openapi.yaml
     volumes:
       - .:/app

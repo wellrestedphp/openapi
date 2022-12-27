@@ -25,7 +25,8 @@ class ContainerBuilder
 
                 $router->register('GET', '/protected/', [TokenMiddleware::class, ProtectedHandler::class]);
 
-                $router->register('GET', '/openapi.json', OpenAPIDocumentHandler::class);
+                $router->register('GET', '/openapi.json', OpenAPIJsonHandler::class);
+                $router->register('GET', '/openapi.yaml', OpenAPIYamlHandler::class);
 
                 $server->add($router);
 
@@ -35,7 +36,7 @@ class ContainerBuilder
             'dog.list.handler' => DI\autowire(DogsHandler::class),
             TokenMiddleware::class => DI\autowire(),
             ProtectedHandler::class => DI\autowire(),
-            OpenAPIDocumentHandler::class => DI\autowire()
+            OpenAPIJsonHandler::class => DI\autowire()
         ]);
         return $builder->build();
     }

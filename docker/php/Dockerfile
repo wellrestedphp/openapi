@@ -7,14 +7,17 @@ RUN apt-get update \
     dumb-init \
     gettext \
     libssl-dev \
+    libyaml-dev \
     unzip \
     wget \
     zip \
   && rm -rf /var/lib/apt/lists/*
 
-# Xdebug
+# Xdebug and Yaml extensions
 RUN pecl install xdebug \
-  && docker-php-ext-enable xdebug
+  && docker-php-ext-enable xdebug \
+  && pecl install yaml \
+  && docker-php-ext-enable yaml
 
  # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- \
