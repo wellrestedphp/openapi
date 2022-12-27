@@ -6,20 +6,19 @@ namespace WellRESTed\OpenAPI\Encoding;
 
 use ReflectionObject;
 use ReflectionProperty;
-use stdClass;
 
 /**
  * Recursively converts an object or array to primatives.
  */
 class PrimativeEncoder
 {
-    public function encode(object|array $source): stdClass|array
+    public function encode(object|array $source): array
     {
         if (is_array($source)) {
             return $this->encodeArray($source);
         }
 
-        $encoded = new stdClass();
+        $encoded = [];
 
         $reflection = new ReflectionObject($source);
         $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
@@ -28,7 +27,7 @@ class PrimativeEncoder
             $encodedValue = $this->encodedProperty($source, $property);
             if ($encodedValue !== null) {
                 $key = $property->getName();
-                $encoded->{$key} = $encodedValue;
+                $encoded[$key] = $encodedValue;
             }
         }
 

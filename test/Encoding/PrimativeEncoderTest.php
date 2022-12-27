@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Encoding;
 
-use stdClass;
 use WellRESTed\OpenAPI\Components\In;
 use WellRESTed\OpenAPI\Components\Operation;
 use WellRESTed\OpenAPI\Components\Parameter;
@@ -24,7 +23,7 @@ class PrimativeEncoderTest extends TestCase
 
     // -------------------------------------------------------------------------
 
-    public function testEncodesToStdClassWithPublicProperties(): void
+    public function testEncodesPropertiesToAssociativeArray(): void
     {
         // Arrange
         $source = new class () {
@@ -40,10 +39,10 @@ class PrimativeEncoderTest extends TestCase
         $encoded = $this->encoder->encode($source);
 
         // Assert
-        $this->assertInstanceOf(stdClass::class, $encoded);
-        $this->assertEquals('Name', $encoded->name);
-        $this->assertEquals('Description', $encoded->description);
-        $this->assertEquals('Summary', $encoded->summary);
+        $this->assertIsArray($encoded);
+        $this->assertEquals('Name', $encoded['name']);
+        $this->assertEquals('Description', $encoded['description']);
+        $this->assertEquals('Summary', $encoded['summary']);
     }
 
     public function testDoesNotEncodeNullProperties(): void
@@ -62,7 +61,7 @@ class PrimativeEncoderTest extends TestCase
         $encoded = $this->encoder->encode($source);
 
         // Assert
-        $this->assertObjectNotHasAttribute('summary', $encoded);
+        $this->assertArrayNotHasKey('summary', $encoded);
     }
 
     public function testDoesNotEncodeUnintializedProperties(): void
@@ -78,7 +77,7 @@ class PrimativeEncoderTest extends TestCase
         $encoded = $this->encoder->encode($source);
 
         // Assert
-        $this->assertObjectNotHasAttribute('description', $encoded);
+        $this->assertArrayNotHasKey('description', $encoded);
     }
 
     public function testWhenPropertyHasDefaultValueAndOmitDefaultDoesNotEncode(): void
@@ -93,7 +92,7 @@ class PrimativeEncoderTest extends TestCase
         $encoded = $this->encoder->encode($source);
 
         // Assert
-        $this->assertObjectNotHasAttribute('deprecated', $encoded);
+        $this->assertArrayNotHasKey('deprecated', $encoded);
     }
 
     public function testEncodesBackedEnumsToScalars(): void
@@ -105,10 +104,10 @@ class PrimativeEncoderTest extends TestCase
         $encoded = $this->encoder->encode($param);
 
         // Assert
-        $this->assertIsString($encoded->in);
+        $this->assertIsString($encoded['in']);
     }
 
-    public function testEncodesObjectFieldToNestedStdClass(): void
+    public function testEncodesObjectFieldToNestedAssociateArray(): void
     {
         // Arrange
         $path = new Path();
@@ -120,10 +119,10 @@ class PrimativeEncoderTest extends TestCase
         $encoded = $this->encoder->encode($path);
 
         // Assert
-        $this->assertInstanceOf(stdClass::class, $encoded);
-        $this->assertInstanceOf(stdClass::class, $encoded->get);
-        $this->assertEquals('Summary', $encoded->get->summary);
-        $this->assertEquals('Description', $encoded->get->description);
+        $this->assertIsArray($encoded);
+        $this->assertIsArray($encoded['get']);
+        $this->assertEquals('Summary', $encoded['get']['summary']);
+        $this->assertEquals('Description', $encoded['get']['description']);
     }
 
     public function testEncodesArrayFieldToArray(): void
@@ -137,10 +136,10 @@ class PrimativeEncoderTest extends TestCase
         $encoded = $this->encoder->encode($operation);
 
         // Assert
-        $this->assertInstanceOf(stdClass::class, $encoded);
-        $this->assertIsArray($encoded->parameters);
-        $this->assertInstanceOf(stdClass::class, $encoded->parameters[0]);
-        $this->assertInstanceOf(stdClass::class, $encoded->parameters[1]);
+        $this->assertIsArray($encoded);
+        $this->assertIsArray($encoded['parameters']);
+        $this->assertIsArray($encoded['parameters'][0]);
+        $this->assertIsArray($encoded['parameters'][1]);
     }
 
     public function testEncodesArrayToArray(): void
@@ -155,7 +154,7 @@ class PrimativeEncoderTest extends TestCase
 
         // Assert
         $this->assertIsArray($encoded);
-        $this->assertInstanceOf(stdClass::class, $encoded[0]);
-        $this->assertInstanceOf(stdClass::class, $encoded[1]);
+        $this->assertIsArray($encoded[0]);
+        $this->assertIsArray($encoded[1]);
     }
 }
