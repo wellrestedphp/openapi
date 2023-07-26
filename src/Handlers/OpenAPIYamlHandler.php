@@ -29,10 +29,8 @@ class OpenAPIYamlHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $doc = $this->encoder->encode($this->server);
-        $representaion = $this->encoder->documentToArray($doc);
-
-        $body = yaml_emit($representaion);
+        $openApi = $this->encoder->encode($this->server);
+        $body = yaml_emit($openApi->toArray());
 
         return (new Response(200))
             ->withHeader('Content-type', 'application/yaml')

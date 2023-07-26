@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI\Encoding;
+namespace WellRESTed\OpenAPI\Components;
 
 use ReflectionObject;
 use ReflectionProperty;
@@ -12,10 +12,10 @@ use ReflectionProperty;
  */
 class PrimativeEncoder
 {
-    public function encode(object|array $source): array
+    public static function encode(object|array $source): array
     {
         if (is_array($source)) {
-            return $this->encodeArray($source);
+            return self::encodeArray($source);
         }
 
         $encoded = [];
@@ -24,7 +24,7 @@ class PrimativeEncoder
         $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
 
         foreach ($properties as $property) {
-            $encodedValue = $this->encodedProperty($source, $property);
+            $encodedValue = self::encodedProperty($source, $property);
             if ($encodedValue !== null) {
                 $key = $property->getName();
                 $encoded[$key] = $encodedValue;
@@ -34,7 +34,7 @@ class PrimativeEncoder
         return $encoded;
     }
 
-    private function encodedProperty(object $source, ReflectionProperty $property): mixed
+    private static function encodedProperty(object $source, ReflectionProperty $property): mixed
     {
         if (!$property->isInitialized($source)) {
             return null;
@@ -53,30 +53,30 @@ class PrimativeEncoder
         if ($value === null) {
             return null;
         } elseif (is_array($value)) {
-            return $this->encodeArray($value);
+            return self::encodeArray($value);
         } elseif (is_object($value)) {
-            return $this->encodeObject($value);
+            return self::encodeObject($value);
         } else {
             return $value;
         }
         return null;
     }
 
-    private function encodeArray(array $source): array
+    private static function encodeArray(array $source): array
     {
         $encoded = [];
         foreach ($source as $key => $value) {
-            $encoded[$key] = $this->encode($value);
+            $encoded[$key] = self::encode($value);
         }
         return $encoded;
     }
 
-    private function encodeObject(object $source): mixed
+    private static function encodeObject(object $source): mixed
     {
         if (enum_exists($source::class)) {
             return $source->value;
         } else {
-            return $this->encode($source);
+            return self::encode($source);
         }
     }
 }

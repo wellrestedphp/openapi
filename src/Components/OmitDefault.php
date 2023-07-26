@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI\Encoding;
+namespace WellRESTed\OpenAPI\Components;
 
 use Attribute;
 

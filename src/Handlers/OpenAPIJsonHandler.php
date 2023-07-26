@@ -29,10 +29,8 @@ class OpenAPIJsonHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $doc = $this->encoder->encode($this->server);
-        $representaion = $this->encoder->documentToArray($doc);
-
-        $body = json_encode($representaion, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $openApi = $this->encoder->encode($this->server);
+        $body = json_encode($openApi->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         return (new Response(200))
             ->withHeader('Content-type', 'application/json')

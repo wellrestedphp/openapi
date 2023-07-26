@@ -6,7 +6,6 @@ namespace WellRESTed\OpenAPI;
 
 use WellRESTed\OpenAPI\Components\OpenAPI;
 use WellRESTed\OpenAPI\Encoding\PathEncoder;
-use WellRESTed\OpenAPI\Encoding\PrimativeEncoder;
 use WellRESTed\OpenAPI\Encoding\ReflectionResolver;
 use WellRESTed\Routing\Router;
 use WellRESTed\Server;
@@ -31,11 +30,5 @@ class OpenAPIEncoder
         }
 
         return $doc;
-    }
-
-    public function documentToArray(OpenAPI $document): array
-    {
-        $primativeEncoder = new PrimativeEncoder();
-        return $primativeEncoder->encode($document);
     }
 }

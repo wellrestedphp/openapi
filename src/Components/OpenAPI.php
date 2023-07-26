@@ -17,4 +17,9 @@ class OpenAPI
     {
         $this->info = new Info();
     }
+
+    public function toArray(): array
+    {
+        return PrimativeEncoder::encode($this);
+    }
 }

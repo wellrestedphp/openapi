@@ -2,27 +2,12 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI\Encoding;
+namespace WellRESTed\OpenAPI\Components;
 
-use WellRESTed\OpenAPI\Components\In;
-use WellRESTed\OpenAPI\Components\Operation;
-use WellRESTed\OpenAPI\Components\Parameter;
-use WellRESTed\OpenAPI\Components\Path;
 use WellRESTed\Test\TestCase;
 
 class PrimativeEncoderTest extends TestCase
 {
-    private PrimativeEncoder $encoder;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->encoder = new PrimativeEncoder();
-    }
-
-    // -------------------------------------------------------------------------
-
     public function testEncodesPropertiesToAssociativeArray(): void
     {
         // Arrange
@@ -36,7 +21,7 @@ class PrimativeEncoderTest extends TestCase
         $source->summary = 'Summary';
 
         // Act
-        $encoded = $this->encoder->encode($source);
+        $encoded = PrimativeEncoder::encode($source);
 
         // Assert
         $this->assertIsArray($encoded);
@@ -58,7 +43,7 @@ class PrimativeEncoderTest extends TestCase
         $source->summary = null;
 
         // Act
-        $encoded = $this->encoder->encode($source);
+        $encoded = PrimativeEncoder::encode($source);
 
         // Assert
         $this->assertArrayNotHasKey('summary', $encoded);
@@ -74,7 +59,7 @@ class PrimativeEncoderTest extends TestCase
         $source->name = 'Name';
 
         // Act
-        $encoded = $this->encoder->encode($source);
+        $encoded = PrimativeEncoder::encode($source);
 
         // Assert
         $this->assertArrayNotHasKey('description', $encoded);
@@ -89,7 +74,7 @@ class PrimativeEncoderTest extends TestCase
         };
 
         // Act
-        $encoded = $this->encoder->encode($source);
+        $encoded = PrimativeEncoder::encode($source);
 
         // Assert
         $this->assertArrayNotHasKey('deprecated', $encoded);
@@ -101,7 +86,7 @@ class PrimativeEncoderTest extends TestCase
         $param = new Parameter('foo', In::QUERY);
 
         // Act
-        $encoded = $this->encoder->encode($param);
+        $encoded = PrimativeEncoder::encode($param);
 
         // Assert
         $this->assertIsString($encoded['in']);
@@ -116,7 +101,7 @@ class PrimativeEncoderTest extends TestCase
         $path->get->description = 'Description';
 
         // Act
-        $encoded = $this->encoder->encode($path);
+        $encoded = PrimativeEncoder::encode($path);
 
         // Assert
         $this->assertIsArray($encoded);
@@ -133,7 +118,7 @@ class PrimativeEncoderTest extends TestCase
         $operation->parameters[] = new Parameter('bar', In::QUERY);
 
         // Act
-        $encoded = $this->encoder->encode($operation);
+        $encoded = PrimativeEncoder::encode($operation);
 
         // Assert
         $this->assertIsArray($encoded);
@@ -150,7 +135,7 @@ class PrimativeEncoderTest extends TestCase
         $params[] = new Parameter('bar', In::QUERY);
 
         // Act
-        $encoded = $this->encoder->encode($params);
+        $encoded = PrimativeEncoder::encode($params);
 
         // Assert
         $this->assertIsArray($encoded);

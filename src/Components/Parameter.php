@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WellRESTed\OpenAPI\Components;
 
 use Attribute;
-use WellRESTed\OpenAPI\Encoding\OmitDefault;
 
 #[Attribute(Attribute::TARGET_CLASS|Attribute::IS_REPEATABLE)]
 class Parameter

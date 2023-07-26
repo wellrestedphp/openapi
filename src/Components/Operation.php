@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Components;
 
-use WellRESTed\OpenAPI\Encoding\OmitDefault;
-
 class Operation
 {
     /** string[] */
