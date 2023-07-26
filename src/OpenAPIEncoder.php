@@ -4,30 +4,38 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI;
 
-use WellRESTed\OpenAPI\Components\Document;
 use WellRESTed\OpenAPI\Components\OpenAPI;
-use WellRESTed\OpenAPI\Encoding\DocumentEncoder;
+use WellRESTed\OpenAPI\Encoding\PathEncoder;
 use WellRESTed\OpenAPI\Encoding\PrimativeEncoder;
+use WellRESTed\OpenAPI\Encoding\ReflectionResolver;
+use WellRESTed\Routing\Router;
 use WellRESTed\Server;
 
 class OpenAPIEncoder
 {
-    private DocumentEncoder $documentEncoder;
-    private PrimativeEncoder $primativeEncoder;
-
-    public function __construct()
-    {
-        $this->documentEncoder = new DocumentEncoder();
-        $this->primativeEncoder = new PrimativeEncoder();
-    }
-
     public function encode(Server $server): OpenAPI
     {
-        return $this->documentEncoder->encode($server);
+        $resolver = new ReflectionResolver($server);
+        $pathEncoder = new PathEncoder($resolver);
+
+        $doc = new OpenAPI();
+        $middlewareQueue = $server->getMiddleware();
+
+        foreach ($middlewareQueue as $middleware) {
+            if ($middleware instanceof Router) {
+                $routes = $middleware->getRoutes();
+                foreach ($routes as $target => $route) {
+                    $doc->paths[$target] = $pathEncoder->encode($route);
+                }
+            }
+        }
+
+        return $doc;
     }
 
     public function documentToArray(OpenAPI $document): array
     {
-        return $this->primativeEncoder->encode($document);
+        $primativeEncoder = new PrimativeEncoder();
+        return $primativeEncoder->encode($document);
     }
 }

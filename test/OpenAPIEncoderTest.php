@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace WellRESTed\OpenAPI\Encoding;
+namespace WellRESTed\OpenAPI;
 
 use WellRESTed\Message\Response;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 
-class DocumentEncoderTest extends TestCase
+class OpenAPIEncoderTest extends TestCase
 {
     public function test_includes_path_for_each_endpoint(): void
     {
@@ -20,7 +20,7 @@ class DocumentEncoderTest extends TestCase
         $server->add($router);
 
         // Act
-        $encoder = new DocumentEncoder();
+        $encoder = new OpenAPIEncoder();
         $doc = $encoder->encode($server);
 
         // Assert
