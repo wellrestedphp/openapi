@@ -10,7 +10,7 @@ use WellRESTed\Test\TestCase;
 
 class DocumentEncoderTest extends TestCase
 {
-    public function testIncludesPathForEachEndpoint(): void
+    public function test_includes_path_for_each_endpoint(): void
     {
         // Arrange
         $server = new Server();

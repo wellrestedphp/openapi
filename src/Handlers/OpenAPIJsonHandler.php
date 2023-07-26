@@ -29,7 +29,7 @@ class OpenAPIJsonHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $doc = $this->encoder->encodeDocument($this->server);
+        $doc = $this->encoder->encode($this->server);
         $representaion = $this->encoder->documentToArray($doc);
 
         $body = json_encode($representaion, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);

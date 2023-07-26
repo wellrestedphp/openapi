@@ -4,29 +4,25 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI\Encoding;
 
-use WellRESTed\OpenAPI\Components\Document;
+use WellRESTed\OpenAPI\Components\OpenAPI;
 use WellRESTed\Routing\Router;
 use WellRESTed\Server;
 
 class DocumentEncoder
 {
-    public function encode(Server $server): Document
+    public function encode(Server $server): OpenAPI
     {
-        $doc = new Document();
+        $resolver = new ReflectionResolver($server);
+        $pathEncoder = new PathEncoder($resolver);
 
-        $reflectionResolver = new ReflectionResolver($server);
-
-        $pathGen = new PathEncoder($reflectionResolver);
-
+        $doc = new OpenAPI();
         $middlewareQueue = $server->getMiddleware();
 
         foreach ($middlewareQueue as $middleware) {
             if ($middleware instanceof Router) {
                 $routes = $middleware->getRoutes();
-
-                /** var Route $route */
                 foreach ($routes as $target => $route) {
-                    $doc->paths[$target] = $pathGen->encode($route);
+                    $doc->paths[$target] = $pathEncoder->encode($route);
                 }
             }
         }

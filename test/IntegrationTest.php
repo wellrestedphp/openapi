@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace WellRESTed\OpenAPI;
 
-use WellRESTed\OpenAPI\Components\Document;
+use WellRESTed\OpenAPI\Components\OpenAPI;
 use WellRESTed\OpenAPI\Example\ContainerBuilder;
 use WellRESTed\Server;
 use WellRESTed\Test\TestCase;
 
 class IntegrationTest extends TestCase
 {
-    private Document $doc;
+    private OpenAPI $doc;
 
     public function setUp(): void
     {
@@ -23,7 +23,7 @@ class IntegrationTest extends TestCase
         $server = $container->get(Server::class);
 
         $encoder = new OpenAPIEncoder();
-        $this->doc = $encoder->encodeDocument($server);
+        $this->doc = $encoder->encode($server);
     }
 
     // -------------------------------------------------------------------------
